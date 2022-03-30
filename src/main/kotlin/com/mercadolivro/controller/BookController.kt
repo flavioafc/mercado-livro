@@ -40,7 +40,6 @@ class BookController(
     }
 
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     fun cancel(@PathVariable id : Int) {
         bookService.cancel(id)
     }

@@ -8,6 +8,7 @@ import com.mercadolivro.enums.BookStatus
 import com.mercadolivro.enums.CustomerStatus
 import com.mercadolivro.model.BookModel
 import com.mercadolivro.model.CustomerModel
+import java.awt.print.Book
 
 fun PostCustomerRequest.toCustomerModel() : CustomerModel {
     return CustomerModel(name = this.name, email = this.email, status = CustomerStatus.ATIVO)
@@ -18,12 +19,15 @@ fun PutCustomerRequest.toCustomerModel(previewsValue: CustomerModel) : CustomerM
 }
 
 fun PostBookRequest.toBookModel(customer: CustomerModel) : BookModel {
-    return BookModel(
+   var book = BookModel(
         name = this.name,
         price = this.price,
-        status = BookStatus.ATIVO,
         customer = customer
     )
+    book.status = BookStatus.ATIVO
+
+    return book
+
 }
 
 fun PutBookRequest.toBookModel(previewsValue: BookModel) : BookModel {
@@ -31,7 +35,6 @@ fun PutBookRequest.toBookModel(previewsValue: BookModel) : BookModel {
         id = previewsValue.id,
         name = this.name ?: previewsValue.name,
         price = this.price ?: previewsValue.price,
-        status = previewsValue.status,
         customer = previewsValue.customer
     )
 }
