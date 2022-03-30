@@ -9,7 +9,6 @@ import com.mercadolivro.service.CustomerService
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 
-
 @RestController
 @RequestMapping("book")
 class BookController(
@@ -17,7 +16,6 @@ class BookController(
     var customerService: CustomerService
 )
 {
-
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     fun create(@RequestBody request : PostBookRequest){
