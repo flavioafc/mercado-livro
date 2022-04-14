@@ -4,6 +4,8 @@ import com.mercadolivro.controller.PostCustomerRequest
 import com.mercadolivro.controller.PutCustomerRequest
 import com.mercadolivro.controller.request.PostBookRequest
 import com.mercadolivro.controller.request.PutBookRequest
+import com.mercadolivro.controller.response.BookResponse
+import com.mercadolivro.controller.response.CustomerResponse
 import com.mercadolivro.enums.BookStatus
 import com.mercadolivro.enums.CustomerStatus
 import com.mercadolivro.model.BookModel
@@ -19,15 +21,12 @@ fun PutCustomerRequest.toCustomerModel(previewsValue: CustomerModel) : CustomerM
 }
 
 fun PostBookRequest.toBookModel(customer: CustomerModel) : BookModel {
-   var book = BookModel(
+   return BookModel(
         name = this.name,
         price = this.price,
+        status = BookStatus.ATIVO,
         customer = customer
     )
-    book.status = BookStatus.ATIVO
-
-    return book
-
 }
 
 fun PutBookRequest.toBookModel(previewsValue: BookModel) : BookModel {
@@ -35,6 +34,26 @@ fun PutBookRequest.toBookModel(previewsValue: BookModel) : BookModel {
         id = previewsValue.id,
         name = this.name ?: previewsValue.name,
         price = this.price ?: previewsValue.price,
+        status = previewsValue.status,
         customer = previewsValue.customer
+    )
+}
+
+fun CustomerModel.toResponse() : CustomerResponse {
+    return CustomerResponse(
+        id = this.id,
+        name = this.name,
+        email = this.email,
+        status = this.status
+    )
+}
+
+fun BookModel.toResponse() : BookResponse {
+    return BookResponse(
+        id = this.id,
+        name = this.name,
+        price = this.price,
+        customer = this.customer,
+        status = this.status
     )
 }
